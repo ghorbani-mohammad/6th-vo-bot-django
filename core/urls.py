@@ -13,10 +13,11 @@ def trigger_error(request):
     division_by_zero = 1 / 0
 
 urlpatterns = [
+    path("", include("apps.question.urls")),
     path("admin/", admin.site.urls),
     path("api/", include("apps.api.urls")),
     path("users/", include("apps.users.urls")),
-    path("question/", include("apps.question.urls")),
+    # path("question/", include("apps.question.urls")),
     path("api/docs/schema", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/docs/",
