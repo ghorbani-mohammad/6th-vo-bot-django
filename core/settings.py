@@ -190,46 +190,6 @@ CACHES = {
     }
 }
 
-LOG_LEVEL = os.environ.get("LOG_LEVEL", "ERROR")
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "simple": {
-            "format": "%(asctime)s %(levelname)s %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",  # Custom date/time format
-        }
-    },
-    "handlers": {
-        "log_all_info": {
-            "class": "logging.FileHandler",
-            "filename": "/app/logs/all_info.log",
-            "mode": "a",
-            "level": "INFO",
-            "formatter": "simple",
-        },
-        "log_all_error": {
-            "class": "logging.FileHandler",
-            "filename": "/app/logs/all_error.log",
-            "mode": "a",
-            "level": "ERROR",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        # all modules
-        "": {
-            "handlers": [
-                "log_all_info",
-                "log_all_error",
-            ],
-            "level": f"{LOG_LEVEL}",
-            "propagate": False,
-        },
-    },
-}
-
-
 sentry_sdk.init(
     dsn=os.getenv("SENTERY_KEY"),
     # Set traces_sample_rate to 1.0 to capture 100%
