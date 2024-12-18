@@ -13,7 +13,6 @@ def trigger_error(request):
     division_by_zero = 1 / 0
 
 urlpatterns = [
-    path("", include("home.urls")),
     path("admin/", admin.site.urls),
     path("api/", include("apps.api.urls")),
     path("users/", include("apps.users.urls")),
