@@ -28,7 +28,6 @@ from rest_framework import status
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
-from apps.common.models import Product
 from apps.users.models import Profile
 from apps.users.forms import (
     SigninForm,
@@ -276,17 +275,3 @@ def profile_info(request):
                 "all_answered_questions_count": profile.answered_questions_count,
             }
         )
-
-
-@api_view(["GET"])
-@authentication_classes([FirebaseAuthentication])
-@permission_classes([IsAuthenticated])
-def delete_account(request):
-    from apps.question.models import Answer
-
-    profile = get_object_or_404(Profile, user=request.user)
-    user = profile.user
-    Answer.objects.filter(profile=profile)
-    profile.delete()
-    user.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
