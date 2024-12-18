@@ -21,7 +21,6 @@ from rest_framework.decorators import (
     permission_classes,
 )
 from rest_framework.permissions import IsAuthenticated
-from firebase_admin import auth as firebase_auth
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
@@ -175,16 +174,7 @@ def user_change_password(request, id):
 @permission_classes([AllowAny])
 def firebase_login(request):
     # Get Firebase token from headers or request data
-    if "Authorization" in request.headers:
-        firebase_token = request.headers.get("Authorization").split().pop()
-        print(f"firebase_token: {firebase_token}")
-
-        # Verify token
-        decoded_token = firebase_auth.verify_id_token(firebase_token)
-        print(f"decoded_token: {decoded_token}")
-        firebase_uid = decoded_token["uid"]
-    else:
-        firebase_uid = request.data.get("firebase_uid")
+    firebase_uid = request.data.get("firebase_uid")
 
     # Get name and category from request data
     name = request.data.get("name")
@@ -229,31 +219,10 @@ def firebase_login(request):
 
 class FirebaseAuthentication(BaseAuthentication):
     def authenticate(self, request):
-        if "Authorization" in request.headers:
-            # Extract the Firebase token from the "Authorization" header
-            auth_header = request.headers.get("Authorization")
-            if not auth_header:
-                return None
-
-            # Expect "Authorization: Bearer <token>"
-            token = auth_header.split(" ").pop()
-            try:
-                # Verify the ID token with Firebase
-                decoded_token = firebase_auth.verify_id_token(token)
-                firebase_uid = decoded_token["uid"]
-
-                # Retrieve or create a User based on the Firebase UID
-                user, _ = User.objects.get_or_create(username=firebase_uid)
-                return (user, None)
-            except Exception as e:
-                raise AuthenticationFailed(f"Firebase authentication failed: {str(e)}")
-        elif "firebase_uid" in request.data:
-            # Retrieve or create a User based on the Firebase UID
-            user, _ = User.objects.get_or_create(
-                username=request.data.get("firebase_uid")
-            )
-            return (user, None)
-        raise AuthenticationFailed("Firebase authentication failed")
+        user, _ = User.objects.get_or_create(
+            username=request.data.get("firebase_uid")
+        )
+        return (user, None)
 
 
 @api_view(["GET", "PATCH"])
