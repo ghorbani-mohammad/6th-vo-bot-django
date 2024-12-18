@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("", views.prompts_setting, name="prompts"),
     path("prompts_setting/", views.prompts_setting, name="prompts_setting"),
     path(
         "update_prompts_setting/",
