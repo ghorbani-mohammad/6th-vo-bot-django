@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from str2bool import str2bool
 from openai import AzureOpenAI
 from django.contrib import messages
-from firebase_admin import credentials, initialize_app, auth
 
 load_dotenv()  # take environment variables from .env.
 
@@ -17,10 +16,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-if not SECRET_KEY:
-    SECRET_KEY = "SuperSecret776"
-
-# Enable/Disable DEBUG Mode
 DEBUG = str2bool(os.environ.get("DEBUG"))
 
 # Hosts Settings
@@ -151,11 +146,6 @@ EMAIL_HOST_USER = os.environ.get(
 )
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
-# ### API-GENERATOR Settings ###
-API_GENERATOR = {
-    "product": "apps.common.models.Product",
-}
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
@@ -178,16 +168,6 @@ MESSAGE_TAGS = {
     messages.ERROR: "text-red-800 border border-red-300 bg-red-50 dark:text-red-400 dark:border-red-800",
 }
 
-
-# Firebase Settings
-FIREBASE_CREDENTIALS_PATH = os.getenv("FIREBASE_CREDENTIALS_PATH")
-firebase_cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
-initialize_app(firebase_cred)
-# Generate a custom token for a user (using their UID)
-# uid = "test_user_uid"  # Replace with a test user's UID
-# custom_token = auth.create_custom_token(uid)
-# # You could then use this custom token to log in on the client-side
-# print("Custom Token:----->", custom_token.decode())
 
 
 OPEN_AI_KEY = os.getenv("OPEN_AI_KEY")
@@ -250,10 +230,8 @@ LOGGING = {
 }
 
 
-SENTERY_KEY = os.getenv("SENTERY_KEY")
-
 sentry_sdk.init(
-    dsn=SENTERY_KEY,
+    dsn=os.getenv("SENTERY_KEY"),
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
     traces_sample_rate=1.0,
