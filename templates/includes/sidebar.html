@@ -1,0 +1,82 @@
+<aside id="sidebar"
+    class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width"
+    aria-label="Sidebar">
+    <div
+        class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+            <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                <ul class="pb-2 space-y-2">
+                    <li>
+                        <form action="#" method="GET" class="lg:hidden">
+                            <label for="mobile-search" class="sr-only">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                                <input type="text" name="email" id="mobile-search"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                    <!-- <li>
+                        <a href="/"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if 'dashboard' in segment %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+                            <i class="fa-solid fa-gauge"></i>
+                            <span class="ml-3" sidebar-toggle-item>Dashboard</span>
+                        </a>
+                    </li> -->
+                    {% if request.user.is_authenticated %}
+
+                    {% if request.user.is_superuser %}                   
+                    <li>
+                        <a href="{% url "user_list" %}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="ml-3" sidebar-toggle-item>Users</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url 'profile' %}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if 'profile' in segment %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+                            <i class="fa-solid fa-user"></i>
+                            <span class="ml-3" sidebar-toggle-item>Profile</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% endif %}
+                    <li>
+                        <a href="{% url "question_list" %}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span class="ml-3" sidebar-toggle-item>Questions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url "level_list" %}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span class="ml-3" sidebar-toggle-item>Levels</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url "answer_list" %}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                            <i class="fa-solid fa-message"></i>
+                            <span class="ml-3" sidebar-toggle-item>Answers</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="pt-2 space-y-2">
+                    <a href="{% url "prompts_setting" %}"
+                        class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="ml-3" sidebar-toggle-item>Prompts Setting</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

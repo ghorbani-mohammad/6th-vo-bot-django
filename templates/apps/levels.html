@@ -1,0 +1,231 @@
+{% extends "layouts/base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+{% block content %}
+
+<main>
+    <div
+        class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full mb-1">
+            <div class="mb-4">
+                <nav class="flex mb-5" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                        <li class="inline-flex items-center">
+                            <a href="#"
+                                class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                <i class="fa-solid fa-house mr-1"></i> Home
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Levels</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Levels</h1>
+            </div>
+            <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+                <div class="flex items-center mb-4 sm:mb-0">
+                    <form class="sm:pr-3" method="GET" action="{% url 'level_list' %}">
+                        <label for="levels-search" class="sr-only">Search</label>
+                        <div class="relative w-48 mt-1 sm:w-64 xl:w-96">
+                            <input type="text" name="search" id="levels-search"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Search for levels" value="{{ request.GET.search|default:'' }}">
+                        </div>
+                    </form>
+                </div>
+                <button id="createLevelButton"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-primary-800"
+                    type="button" data-drawer-target="drawer-create-level-default"
+                    data-drawer-show="drawer-create-level-default" aria-controls="drawer-create-level-default"
+                    data-drawer-placement="right">
+                    Add new level
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow">
+                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">ID</th>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Title</th>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Description</th>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Image</th>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                            {% for level in levels %}
+                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <td class="p-4 text-sm font-medium text-gray-900 dark:text-white">{{ level.id }}</td>
+                                <td class="p-4 text-sm font-normal text-gray-500 dark:text-gray-400">{{ level.title }}</td>
+                                <td class="p-4 text-sm font-normal text-gray-500 dark:text-gray-400">{{ level.description }}</td>
+                                <td class="p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    {% if level.image %}
+                                        <img src="{{ level.image.url }}" alt="Level Image" class="w-12 h-12 object-cover">
+                                    {% else %}
+                                        <span>No Image</span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-4 space-x-2">
+                                    <button type="button" data-drawer-target="drawer-update-level-default{{level.id}}"
+                                        data-drawer-show="drawer-update-level-default{{level.id}}" aria-controls="drawer-update-level-default{{level.id}}"
+                                        data-drawer-placement="right"
+                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+                                        <i class="fa-solid fa-pen-to-square mr-1"></i> Update
+                                    </button>
+                                    <button type="button" data-drawer-target="drawer-delete-level-default{{level.id}}"
+                                        data-drawer-show="drawer-delete-level-default{{level.id}}" aria-controls="drawer-delete-level-default{{level.id}}"
+                                        data-drawer-placement="right"
+                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                                        <i class="fa-solid fa-trash-can mr-1"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Delete Level Drawer -->
+                            <div id="drawer-delete-level-default{{level.id}}"
+                            class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
+                            tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+                                <h5 id="drawer-label" class="text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Delete Level</h5>
+                                <p class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this level?</p>
+                                <a href="{% url 'delete_level' level.id %}"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2.5 mr-2 dark:focus:ring-red-900">
+                                    Yes, I'm sure
+                                </a>
+                                <button type="button" data-drawer-dismiss="drawer-delete-level-default{{level.id}}"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                    No, cancel
+                                </button>
+                            </div>
+
+                            <!-- Update Level Drawer -->
+                            <div id="drawer-update-level-default{{level.id}}"
+                            class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
+                            tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+                                <h5 id="drawer-label" class="text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Update Level</h5>
+                                <form method="post" action="{% url 'update_level' level.id %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                                        <input type="text" name="title" value="{{ level.title }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    </div>
+                                    <div>
+                                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                        <textarea name="description"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ level.description }}</textarea>
+                                    </div>
+                                    <div>
+                                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
+                                        {% if level.image %}
+                                            <img src="{{ level.image.url }}" alt="Level Image" class="w-12 h-12 object-cover mb-2">
+                                        {% endif %}
+                                        <input type="file" name="image"
+                                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                                    </div>
+                                </div>
+                                <div class="flex justify-center w-full pb-4 mt-4">
+                                    <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+                                        Update
+                                    </button>
+                                </div>
+                                </form>
+                            </div>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Level Drawer -->
+    <div id="drawer-create-level-default"
+        class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
+        tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+        <h5 id="drawer-label" class="text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">New Level</h5>
+        <form method="post" action="{% url 'create_level' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                    <input type="text" name="title" id="title"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter level title">
+                </div>
+                <div>
+                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <textarea name="description" id="description"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Enter level description"></textarea>
+                </div>
+                <div>
+                    <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
+                    <input type="file" name="image" id="image"
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                </div>
+                <div class="flex justify-center w-full pb-4">
+                    <button type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+                        Add Level
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Pagination -->
+    <div
+        class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 flex justify-between dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex items-center mb-4 sm:mb-0">
+        {% if levels.has_previous %}
+        <a href="?page={{ levels.previous_page_number }}"
+            class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+            <i class="fa-solid fa-backward-step"></i>
+        </a>
+        {% endif %}
+
+        {% if levels.has_next %}
+        <a href="?page={{ levels.next_page_number }}"
+            class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+            <i class="fa-solid fa-forward-step"></i>
+        </a>
+        {% endif %}
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
+            class="font-semibold text-gray-900 dark:text-white">{{ levels.start_index }}-{{ levels.end_index }}</span> of <span
+            class="font-semibold text-gray-900 dark:text-white">{{ levels.paginator.count }}</span></span>
+        </div>
+        <div class="flex items-center space-x-3">
+        {% if levels.has_previous %}
+        <a href="?page={{ levels.previous_page_number }}"
+            class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+            <i class="fa-solid fa-backward-step"></i>
+            Previous
+        </a>
+        {% endif %}
+        {% if levels.has_next %}
+        <a href="?page={{ levels.next_page_number }}"
+            class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-primary-800">
+            Next
+            <i class="fa-solid fa-forward-step"></i>
+        </a>
+        {% endif %}
+        </div>
+    </div>
+
+</main>
+
+{% endblock content %}
