@@ -24,23 +24,6 @@ class Profile(models.Model):
         return self.user.username
 
     @property
-    def level_questions_answered_count(self):
-        from apps.question.models import Answer
-
-        level = self.level
-        return Answer.objects.filter(profile=self, question__level=level).count()
-
-    @property
-    def answered_questions_count(self):
-        return self.answered_questions.count()
-
-    @property
-    def answered_questions(self):
-        from apps.question.models import Question
-
-        return Question.objects.filter(answer__profile=self).distinct()
-
-    @property
     def personal_growth_horoscopy(self):
         return "You are growing"
 
@@ -51,21 +34,3 @@ class Profile(models.Model):
     @property
     def relationship_horoscopy(self):
         return "You have a good relationship"
-
-    @property
-    def level(self):
-        print("In the profile level property")
-        from apps.question.models import Level, Answer
-
-        levels = Level.objects.order_by("pk")
-        for level in levels:
-            print(f"level: {level}")
-            questions_count = level.questions_count
-            answered_questions_count = Answer.objects.filter(
-                profile=self, question__level=level
-            ).count()
-
-            if answered_questions_count < questions_count:
-                return level  # or return level object if needed
-        # If all levels are fully answered
-        return levels.last() if levels.exists() else None

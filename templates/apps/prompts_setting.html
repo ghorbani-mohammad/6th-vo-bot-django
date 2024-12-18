@@ -7,96 +7,93 @@
 
 <main class="p-6 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     {% if messages %}
-        {% for message in messages %}
-            <div class="flex items-center mt-1 p-4 text-sm rounded-lg dark:bg-gray-800 {{message.tags}}" role="alert" id="alert-{{ forloop.counter }}">
-                <i class="fa-solid fa-circle-info mr-2"></i>
-                <span class="sr-only">Info</span>
-                <div>{{ message }}</div>
-            </div>
-            <script>
-                // Set a timer to remove the alert after 5 seconds (5000 ms)
-                setTimeout(function() {
-                    document.getElementById("alert-{{ forloop.counter }}").style.display = "none";
-                }, 5000);
-            </script>
-        {% endfor %}
+    {% for message in messages %}
+    <div class="flex items-center mt-1 p-4 text-sm rounded-lg dark:bg-gray-800 {{message.tags}}" role="alert"
+        id="alert-{{ forloop.counter }}">
+        <i class="fa-solid fa-circle-info mr-2"></i>
+        <span class="sr-only">Info</span>
+        <div>{{ message }}</div>
+    </div>
+    <script>
+        // Set a timer to remove the alert after 5 seconds (5000 ms)
+        setTimeout(function () {
+            document.getElementById("alert-{{ forloop.counter }}").style.display = "none";
+        }, 5000);
+    </script>
+    {% endfor %}
     {% endif %}
     <div class="w-full max-w-2xl">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Horoscopy Prompts Settings</h1>
-        
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Prompts Settings</h1>
+
         <form method="post" action="{% url 'update_prompts_setting' %}" class="text-left">
             {% csrf_token %}
-            
+
             <div class="mb-4">
-                <label for="personal_growth" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Personal Growth</label>
-                <textarea id="personal_growth" name="personal_growth" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.personal_growth }}</textarea>
+                <label for="personal_growth" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Define
+                    Character</label>
+                <textarea id="personal_growth" name="personal_growth" rows="4"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required>{{ setting.personal_growth }}</textarea>
             </div>
 
             <div class="mb-4">
-                <label for="personal_growth_todo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Personal Growth TODO</label>
-                <textarea id="personal_growth_todo" name="personal_growth_todo" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.personal_growth_todo }}</textarea>
-            </div>
-            
-            <div class="mb-4">
-                <label for="success" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Success</label>
-                <textarea id="success" name="success" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.success }}</textarea>
+                <label for="success" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Define list of
+                    products </label>
+                <textarea id="success" name="success" rows="4"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required>{{ setting.success }}</textarea>
             </div>
 
             <div class="mb-4">
-                <label for="success_todo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Success TODO</label>
-                <textarea id="success_todo" name="success_todo" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.success_todo }}</textarea>
+                <label for="relationships" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Define
+                    Greeting Message</label>
+                <textarea id="relationships" name="relationships" rows="4"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required>{{ setting.relationships }}</textarea>
             </div>
 
             <div class="mb-4">
-                <label for="relationships" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Relationships</label>
-                <textarea id="relationships" name="relationships" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.relationships }}</textarea>
+                <label for="affirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Define
+                    Vibration pattern Q&A </label>
+                <textarea id="affirmation" name="affirmation" rows="4"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required>{{ setting.affirmation }}</textarea>
             </div>
 
-            <div class="mb-4">
-                <label for="relationships_todo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Relationships TODO</label>
-                <textarea id="relationships_todo" name="relationships_todo" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.relationships_todo }}</textarea>
-            </div>
-
-            <div class="mb-4">
-                <label for="affirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Affirmation</label>
-                <textarea id="affirmation" name="affirmation" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.affirmation }}</textarea>
-            </div>
-            
-            <div class="mb-4">
-                <label for="thinker" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Thinker</label>
-                <textarea id="thinker" name="thinker" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.thinker }}</textarea>
-            </div>
-            
-            <div class="mb-4">
-                <label for="quote" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Quote</label>
-                <textarea id="quote" name="quote" rows="4" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required>{{ setting.quote }}</textarea>
-            </div>
-            
-            
             <!-- Temperature Field -->
             <div class="mb-4">
-                <label for="temperature" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Temperature</label>
-                <input type="number" step="0.1" min="0" max="1" id="temperature" name="temperature" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required value="{{ setting.temperature }}">
+                <label for="temperature"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Temperature</label>
+                <input type="number" step="0.1" min="0" max="1" id="temperature" name="temperature"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required value="{{ setting.temperature }}">
             </div>
-            
+
             <!-- Max Tokens Field -->
             <div class="mb-4">
-                <label for="max_tokens" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Max Tokens</label>
-                <input type="number" min="1" id="max_tokens" name="max_tokens" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required value="{{ setting.max_tokens }}">
+                <label for="max_tokens" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Max
+                    Tokens</label>
+                <input type="number" min="1" id="max_tokens" name="max_tokens"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required value="{{ setting.max_tokens }}">
             </div>
 
             <!-- cache duration -->
             <div class="mb-4">
-                <label for="cache_duration" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cache Duration (in seconds)</label>
-                <input type="number" min="1" id="cache_duration" name="cache_duration" class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" required value="{{ setting.cache_duration }}">
+                <label for="cache_duration" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cache
+                    Duration (in seconds)</label>
+                <input type="number" min="1" id="cache_duration" name="cache_duration"
+                    class="mt-1 w-full p-2 border border-gray-300 rounded dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
+                    required value="{{ setting.cache_duration }}">
             </div>
 
-            <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+            <button type="submit"
+                class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                 Update Prompts
             </button>
         </form>
     </div>
-    
+
 </main>
 
 {% endblock content %}

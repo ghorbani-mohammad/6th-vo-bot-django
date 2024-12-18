@@ -28,9 +28,9 @@
                     </li> -->
                     {% if request.user.is_authenticated %}
 
-                    {% if request.user.is_superuser %}                   
+                    {% if request.user.is_superuser %}
                     <li>
-                        <a href="{% url "user_list" %}"
+                        <a href="{% url " user_list" %}"
                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
                             <i class="fa-solid fa-user"></i>
                             <span class="ml-3" sidebar-toggle-item>Users</span>
@@ -47,30 +47,9 @@
                     {% endif %}
 
                     {% endif %}
-                    <li>
-                        <a href="{% url "question_list" %}"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <i class="fa-solid fa-file-lines"></i>
-                            <span class="ml-3" sidebar-toggle-item>Questions</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "level_list" %}"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span class="ml-3" sidebar-toggle-item>Levels</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url "answer_list" %}"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <i class="fa-solid fa-message"></i>
-                            <span class="ml-3" sidebar-toggle-item>Answers</span>
-                        </a>
-                    </li>
                 </ul>
                 <div class="pt-2 space-y-2">
-                    <a href="{% url "prompts_setting" %}"
+                    <a href="{% url " prompts_setting" %}"
                         class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
                         <i class="fa-solid fa-gear"></i>
                         <span class="ml-3" sidebar-toggle-item>Prompts Setting</span>
