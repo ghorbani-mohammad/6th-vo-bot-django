@@ -20,7 +20,7 @@
             </svg>
           </button>
           <a href="/" class="flex ml-2 md:mr-24">
-            <img src="https://flowbite-admin-dashboard.vercel.app/images/logo.svg" class="h-8 mr-3"
+            <img src="https://ai-playground-api.vibesonly.com/static/logo.png" class="h-8 mr-3"
               alt="FlowBite Logo" />
             <span
               class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Vibes Only</span>
@@ -67,7 +67,7 @@
                 {% if request.user.profile.avatar %}
                   <img class="w-8 h-8 rounded-full" src="{{ request.user.profile.avatar.url }}" alt="user photo">
                 {% else %}
-                  <img class="w-8 h-8 rounded-full" src="{% static "dist/img/default-user.png" %}" alt="user photo">
+                  <img class="w-8 h-8 rounded-full" src="{% static 'dist/img/default-user.png' %}" alt="user photo">
                 {% endif %}
               </button>
             </div>
