@@ -23,6 +23,7 @@ services:
       - ./templates:/app/templates
       - ./media:/app/media
       - ./logs:/app/logs
+      - ./static:/app/static
     command: ["python", "/app/manage.py", "runserver", "0:5005"]
 
   nginx:
