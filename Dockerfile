@@ -30,9 +30,12 @@ RUN apt-get update && \
 COPY . .
 
 # Install npm dependencies and build assets
-RUN npm install && \
-    npm run build && \
-    npx tailwindcss -i ./static/assets/style.css -o ./static/dist/css/output.css
+# RUN npm install && \
+#     npm run build && \
+#     npx tailwindcss -i ./static/assets/style.css -o ./static/dist/css/output.css
+RUN npm install
+RUN npm run build
+RUN npx tailwindcss -i ./static/assets/style.css -o ./static/dist/css/output.css
 
 # Collect static files (skip if handled during deployment)
 RUN python manage.py collectstatic --no-input
