@@ -36,7 +36,7 @@ COPY . .
 RUN npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react mini-css-extract-plugin css-loader postcss-loader css-minimizer-webpack-plugin webpack webpack-cli webpack-dev-server
 RUN npm install
 RUN npm run build
-RUN npx tailwindcss -i ./static/assets/style.css -o ./static/dist/css/output.css
+# RUN npx tailwindcss -i ./static/assets/style.css -o ./static/dist/css/output.css
 
 # Collect static files (skip if handled during deployment)
 RUN python manage.py collectstatic --no-input
