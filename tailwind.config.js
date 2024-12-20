@@ -2,7 +2,6 @@ module.exports = {
   content: [
     './templates/**/*.html',
     './static/**/*.js',
-    './node_modules/flowbite/**/*.js'
   ],
   safelist: [
     'w-64',
@@ -53,7 +52,5 @@ module.exports = {
     },
   },
 
-  plugins: [
-    require('flowbite/plugin')
-  ],
+  plugins: [],
 }
